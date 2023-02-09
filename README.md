@@ -1,2 +1,2 @@
-# juggler-game-js
-A Juggler game which written by JS🛠️
+# slot-machine-js
+A slot game which written by JS🛠️

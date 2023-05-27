@@ -1,0 +1,37 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/functions" as *;
+.header {
+    position: relative;
+    width: 100%;
+    padding: 12px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: $appsBackGrey;
+}
+.headerLogoContent {
+    position: relative;
+    @include flxbx(ct, ct);
+}
+.headerCasheContent {
+    width: 30%;
+    position: relative;
+    @include flxbx(btwn, ct);
+    p {
+        display: inline-block;
+        background: $appsMainWhite;
+        width: 100%;
+        min-width: 120px;
+        padding: spaces(sm);
+        overflow: hidden;
+        border: 1px solid $appsContentsGrey;
+        border-radius: 20px;
+    }
+}
+.headerMyCoin {
+    margin-right: spaces(md);
+}
+.headerMyMedal {
+    margin-left: spaces(md);
+}

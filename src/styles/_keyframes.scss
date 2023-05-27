@@ -1,0 +1,8 @@
+@use "@/styles/variables" as *;
+@use "@/styles/functions" as *;
+/* keyframes */
+@keyframes springBall {
+    0% {
+        transform: translate();
+    }
+}

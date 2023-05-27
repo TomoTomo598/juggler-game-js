@@ -1,0 +1,68 @@
+
+/* basic colors */
+$appsBackGrey: #F0F0F0;
+$appsContentsGrey: #E8E2E2;
+$appsContentsHighGrey: #B2B2B2;
+$appsMainWhite: #F9F9F9;
+$appsMainBlack: #181818;
+
+/* other colors */
+$myMilk: #F9F2ED;
+$mySkyBlue: #3AB0FF;
+$myBlue: #537FE7;
+$myOrange: #F76E11;
+$myRed: #F32424;
+$myYellow: #FFC300;
+$myGreen: #38E54D;
+$myBlueBlack: #060047;
+/* gradiention color */
+$gradientEvening: linear-gradient(#e66465, #9198e5);
+
+/* font face */
+$basicFontFamily: 'Source Code Pro', monospace;
+$defaultFontSize: 62.5%;
+$fontSizingTheme: (
+    xs: 0.25rem,
+    sm: 0.5rem,
+    md: 1rem,// default is 16px === 1rem
+    lg: 1.5rem,
+    xl: 2rem
+);
+$fontWeightType: (
+    xlt: 200,
+    lt: 300,
+    rg: 400,
+    md: 500,
+    sbd: 600,
+    bd: 700,
+    xbd: 800
+);
+/* flex position */
+$flexPosition: (
+    st: start,
+    ct: center,
+    ed: end,
+    arnd: space-around,
+    btwn: space-between,
+    stch: stretch
+);
+/* spacing */
+$spacingTheme: (
+    xs: 4px,
+    sm: 8px,
+    md: 16px,
+    lg: 24px,
+    xl: 32px,
+    ul: 40px,
+);
+/* media breakpoints */
+$breakpoint: (
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    ul: 1400px
+);
+/* slot box sizing */
+$oneboxHeight: 50px;
+$oneboxWidth: 100px;

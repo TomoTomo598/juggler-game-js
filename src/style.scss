@@ -1,0 +1,9 @@
+/* reset stylesheet */
+@charset "UTF-8";
+@use "@/styles/resets";
+/* each layout */
+@use "@/components/header/header.components.scss";
+@use "@/components/contents/scores/score.components.scss";
+@use "@/components/contents/slots/slot.components.scss";
+@use "@/components/contents/handles/handle.components.scss";
+@use "@/components/footer/footer.components.scss";

@@ -1,0 +1,24 @@
+@use "@/styles/variables" as var;
+
+/* font face */
+@mixin fntfce(
+    $size: var.$defaultFontSize,
+    $weight: md,
+    $color: var.$appsMainBlack,
+    $family: var.$basicFontFamily,
+) {
+    font-size: map-get(var.$fontSizingTheme, $size);
+    font-weight: map-get(var.$fontWeightType, $weight);
+    color: $color;
+    font-family: $family;
+}
+/* flexbox */
+@mixin flxbx($pos1, $pos2) {
+    display: flex;
+    justify-content: map-get(var.$flexPosition, $pos1);
+    align-items: map-get(var.$flexPosition, $pos2);
+}
+/* media query */
+@mixin media($point) {
+    @media screen and (min-width: $point) {}
+}

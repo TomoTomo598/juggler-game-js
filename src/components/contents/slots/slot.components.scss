@@ -1,0 +1,53 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/functions" as *;
+.slotContainer {
+    flex: 0.7;
+    position: relative;
+    width: 500px;
+    @include flxbx(ct, st);
+    flex-direction: column;
+    margin: spaces(lg);
+}
+.slotDisplay {
+    display: flex;
+    margin: auto;
+    border-radius: spaces(md);
+    box-shadow: -2px -2px 8px rgba(255,255,255,1),
+                -2px -2px 18px rgba(255,255,255,.6),
+                2px 2px 14px rgba(255,255,255,1);
+    background: rgba(255, 255, 255, .5);
+    overflow: hidden;
+    width: $oneboxWidth * 3;
+    height: $oneboxHeight * 3;
+    &>ul {
+        position: relative;
+        width: 90%;
+        height: 100%;
+        &>li {
+            position: absolute;
+            left: 0;
+            width: 100px;
+            height: $oneboxHeight;
+            margin: 0 auto;
+            @include flxbx(ct, ct);
+            text-align: center;
+            border: 1px solid transparent;
+            padding: spaces(xs);
+            &>p {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: fntsiz(xl) * 1.25;
+                user-select: none;
+            }
+        }
+    }
+}
+
+.slt-active {
+    &>li {
+        transform: translateY($oneboxHeight);
+    }
+}

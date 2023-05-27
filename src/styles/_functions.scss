@@ -1,0 +1,10 @@
+@use "@/styles/variables" as var;
+
+/* spacings */
+@function spaces($key) {
+    @return map-get(var.$spacingTheme, $key);
+}
+/* font sizings */
+@function fntsiz($key) {
+    @return map-get(var.$fontSizingTheme, $key);
+}

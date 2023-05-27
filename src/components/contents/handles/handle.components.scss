@@ -1,0 +1,87 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/functions" as *;
+
+.handleSection {
+    @include flxbx(arnd, ct);
+    width: 100%;
+    user-select: none;
+    margin-top: spaces(xs) * 20;
+}
+.leverContent {
+    position: relative;
+    display: block;
+    padding: spaces(md);
+    height: 50%;
+    border: 1px solid $appsMainBlack;
+    border-radius: spaces(lg);
+    background: $myBlueBlack;
+}
+.leverBall {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: spaces(lg);
+    height: auto;
+    border-radius: 50%;
+    background: $gradientEvening;
+    cursor: pointer;
+}
+.buttonContent {
+    &>ul {
+        @include flxbx(btwn, ct);
+        &>li {
+            &>button {
+                position: relative;
+                margin: 0 spaces(xl);
+                padding: spaces(lg);
+                border-radius: 50%;
+                background: transparent;
+                box-shadow: 1.5px 1.5px 2px 1px rgba($color: #000000, $alpha: 0.3),
+                            -2px -2px 3px 2px rgba($color: #fff, $alpha: 0.9);
+                &:active {
+                    box-shadow: inset 1.5px 1.5px 2px 1px rgba($color: #000000, $alpha: 0.3),
+                                inset -2px -2px 3px 2px rgba($color: #fff, $alpha: 0.9);
+                }
+                border: none;
+                outline: none;
+                &>span {
+                    @include fntfce(xl, lt, $color: $appsContentsHighGrey);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+            }
+        }
+    }
+}
+.casheContent {
+    box-sizing: content-box;
+    &>ul {
+
+        border: 1px solid $appsContentsHighGrey;
+        border-radius: spaces(sm);
+        overflow: hidden;
+        .casheListItems {
+            box-sizing: content-box;
+            &>button {
+                @include fntfce(md, bd);
+                padding: spaces(xs) * 2;
+                width: 100%;
+                outline: none;
+                border: none;
+                transition: all .2s;
+                border-bottom: 1px solid $appsContentsHighGrey;
+                border-radius: 0;
+                &:hover {
+                    color: $myBlue;
+                }
+            }
+            &:last-child > button {
+                border: none;
+            }
+        }
+    }
+}

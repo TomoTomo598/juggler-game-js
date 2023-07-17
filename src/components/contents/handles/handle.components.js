@@ -3,37 +3,74 @@ import store from "../../../utils/store";
 
 export class Handle {
     static CASHE_BUTTON_VALUE = ['x 100', 'x 10', 'cash'];
-    static BUTTON_ITEMS_SUBDOM = [
-        {
-            name: 'button',
-            children: [{ name: 'span', text: 1 }],
-            on: ['click', function() { store.actLeanFlag[0] = 0 }],
-        },
-        {
-            name: 'button',
-            children: [{ name: 'span', text: 2 }],
-            on: ['click', function() { store.actLeanFlag[1] = 0 }],
-        },
-        {
-            name: 'button',
-            children: [{ name: 'span', text: 3 }],
-            on: ['click', function() { store.actLeanFlag[2] = 0 }],
-        },
-    ];
-    static CASHE_ITEMS_SUBDOM = [
-        {
-            name: 'button',
-            text: Handle.CASHE_BUTTON_VALUE[0],
-        },
-        {
-            name: 'button',
-            text: Handle.CASHE_BUTTON_VALUE[1],
-        },
-        {
-            name: 'button',
-            text: Handle.CASHE_BUTTON_VALUE[2],
-        },
-    ];
+    static BUTTON_ITEM_VALUE = [1, 2, 3];
+    
+    
+    buttonElements = {
+        name: 'button',
+        children: [{ name: 'span', text: Handle.BUTTON_ITEM_VALUE }],
+        on: ['click', this.compareIntervalStatement],
+    };
+        
+    casheElements = {
+        name: 'button',
+        text: Handle.CASHE_BUTTON_VALUE,
+    }
+
+    // init functions
+    respondHandleButtonSubdom(element, loop) {
+        const resArray = [];
+        let forArray, childTemplate, arrayKey = [];
+        let resTemplate = {};
+
+        Object.keys(element).forEach(key => {
+            arrayKey.push(key);
+            if (!['on', 'children'].includes(key) && Array.isArray(element[key])) {
+                forArray = element[key];
+            }
+            else if (key === 'children') {
+                element[key].forEach(child => {
+                    childTemplate = {};
+                    Object.keys(child).forEach(key2 => {
+                        childTemplate[key2] = child[key2];
+                    });
+                });
+            }
+        });
+        for (let i = 0; i < loop; i++) {    
+            arrayKey.forEach(key => {
+                if (key === 'on' && typeof element[key][1] === 'function') element[key] = [element[key][0], element[key][1](i)];
+
+                else if (!['on', 'children'].includes(key) && Array.isArray(element[key])) resTemplate[key] = forArray[i];
+                
+                else if (key === 'children') {
+                    let array = [];
+                    let template = {};
+
+                    Object.keys(childTemplate).forEach(key2 => {
+                        template[key2] = Array.isArray(childTemplate[key2]) ? childTemplate[key2][i] : childTemplate[key2];
+                    });
+
+                    array.push(template);
+                    resTemplate[key] = array;
+                }
+
+                else resTemplate[key] = element[key];
+            });
+
+            resArray.push(resTemplate);
+            resTemplate = {};
+        }
+        return resArray;
+    };
+    compareIntervalStatement(idx) {
+        console.log(idx);
+
+        const currentI = store[`interval${idx + 1}`];
+        const historyI = store.history.map((o) => o[`interval${idx + 1}`]);
+        if (Object.is(currentI, historyI)) store[`interval${idx + 1}`] = historyI;
+        else store[`interval${idx + 1}`] = currentI;
+    };
 
     // content
     container = document.createElement('section');
@@ -71,28 +108,30 @@ export class Handle {
         // return fragment
         return this.fragment;
     }
-    // slot cashe list
-    get casheListItems() {
+    // slot button list
+    get buttonListItems() {
         const fragment = document.createDocumentFragment();
-        const children = Handle.CASHE_ITEMS_SUBDOM.map(child => createSubElement(child));
+        const resArray = this.respondHandleButtonSubdom(this.buttonElements, 3);
+        const children = resArray.map(child => createSubElement(child));
         const items = createListItems({
             name: 'li',
-            className: 'casheListItems',
-            idName: 'cashe-btn',
+            className: 'buttonListItems',
+            idName: 'btn',
             length: 3,
             subElements: children
         });
         fragment.appendChild(items);
         return fragment;
     }
-    // slot button list
-    get buttonListItems() {
+    // slot cashe list
+    get casheListItems() {
         const fragment = document.createDocumentFragment();
-        const children = Handle.BUTTON_ITEMS_SUBDOM.map(child => createSubElement(child));
+        const resArray = this.respondHandleButtonSubdom(this.casheElements, 3);
+        const children = resArray.map(child => createSubElement(child));
         const items = createListItems({
             name: 'li',
-            className: 'buttonListItems',
-            idName: 'btn',
+            className: 'casheListItems',
+            idName: 'cashe-btn',
             length: 3,
             subElements: children
         });

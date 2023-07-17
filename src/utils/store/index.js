@@ -1,6 +1,7 @@
 function State() {
     this.actions = {};
     this.mutations = {};
+    this.history = [];
 }
 State.prototype.subscribe = function(prop, callback) {
     if (!callback) {
@@ -15,25 +16,25 @@ State.prototype.subscribe = function(prop, callback) {
         },
         set(value) {
             subscribe = value;
+            this.history.push(Object.fromEntries([prop, value]));
             callback();
         },
     });
-    function watchArray(array, index, callback) {
-        let deletedArr = null;
-        return new Proxy(array, {
-            deleteProperty(target, prop) {
-                deletedArr = [...array];
-                const result = Reflect.defineProperty(target, prop);
-                return result;
-            },
-            set(target, prop, val, receiver) {
-                const oldArr = [...array];
-                const result = Reflect.set(target, prop, val, receiver);
-                return
+};
+
+State.prototype.watchArray = function(prop, callback) {
+    Object.defineProperty(prop, 'push', {
+        value() {
+            const oldArr = [...this];
+            // push() progress
+            let n = this.length;
+            for (let i=0; i<arguments.length; i++, n++) {
+                this[n] = arguments[i];
             }
-        });
-        
-    }
+            callback(oldArr, this);
+            return n;
+        },
+    });
 };
 
 State.prototype.commit = function(action, callback) {

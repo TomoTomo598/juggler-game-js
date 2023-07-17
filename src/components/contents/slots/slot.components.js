@@ -23,7 +23,16 @@ export class Slot {
         store.subscribe('actLeanFlag', function() {
             store.dispatch('slotRotation');
         });
-        store.intervalID = [];
+
+        for (let i=0; i<3; i++) {
+            store.subscribe(`interval${i + 1}`, function() {
+                const currentI = store[`interval${i + 1}`];
+                const historyI = store.history.map((o) => o[`interval${i + 1}`]);
+                if (!Object.is(currentI, historyI)) store.dispatch('slotRotation');
+                else store.dispatch('slotRotation');
+            });
+        }
+
         store.eachBoxY = [];
 
         // add class
@@ -76,13 +85,12 @@ export class Slot {
     // slot rotation controll
     slotRotation() {
         // lean keys
-        const flag = store.actLeanFlag;
-        flag.some(function(element, index) {
+
+        for (let i=0; i<3; i++) {
             const lists = $('slotDisplay');
-            const list = lists.childNodes[index];
+            const list = lists.childNodes[i];
             const items = Array.prototype.slice.call(list.childNodes);
-    
-            if (element && !store.intervalID[index]) {
+            if (!store[`interval${i+1}`]) {
                 const intervalID = setInterval(() => {
                     items.map((item, index) => {
                         if (store.eachBoxY[index] > Slot.ONEBOX_HEIGHT * (Slot.SLOT_CHAR_NUM - 1)) store.eachBoxY[index] = - Slot.ONEBOX_HEIGHT;
@@ -90,13 +98,16 @@ export class Slot {
                         item.style.setProperty('top', `${store.eachBoxY[index]}px`);
                     });
                 }, 50);
-                store.intervalID[index] = intervalID;
-                console.table(store.intervalID);
-            } else if (!element && store.intervalID[index]) {
-                clearInterval(store.intervalID[index]);
-                store.intervalID[index] = null;
+                store[`interval${i+1}`] = intervalID;
+                console.log(store.interval1, store.interval2, store.interval3);
+            } else if (!element && store.intervalID[i]) {
+                clearInterval(store[`interval${index+1}`]);
+                store.intervalID[index+1] = null;
             }
-        });
+            
+        }
+
+        
         
     }
 }
